@@ -3,6 +3,7 @@ package practice3;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertThat;
  */
 public class OrderTest {
     @Test
-    public void calculate() throws Exception {
+    public void calculate() {
         //Given
         List<OrderLineItem> orderLineItemList = asList(new OrderLineItem(100),
                 new OrderLineItem(50),
@@ -23,14 +24,13 @@ public class OrderTest {
                 new BigDecimal(5),
                 new BigDecimal(3));
         Order order = new Order(orderLineItemList, discounts);
-
         //When
         BigDecimal total = order.calculate();
-        BigDecimal expectedTotal = new BigDecimal(178.2);
+        BigDecimal expectedTotal = new BigDecimal("178.2");
 
         //Then
-        assertThat(total.setScale(2, BigDecimal.ROUND_HALF_UP),
-                is(expectedTotal.setScale(2, BigDecimal.ROUND_HALF_UP)));
+        assertThat(total.setScale(2, RoundingMode.HALF_UP),
+                is(expectedTotal.setScale(2, RoundingMode.HALF_UP)));
     }
 
 
